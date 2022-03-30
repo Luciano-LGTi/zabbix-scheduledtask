@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.4</version>
+    <date>2022-03-30T13:44:15Z</date>
+    <groups>
+        <group>
+            <uuid>f09133f392af42a4bd7d6096d452faf3</uuid>
+            <name>Template/ProMonitors</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <uuid>c1dfe2cab7e6425bb20be1a0f6e7910f</uuid>
+            <template>Template Windows Task Scheduler - ProMonitors</template>
+            <name>Template Windows Task Scheduler - ProMonitors</name>
+            <description>Discover and monitor all Task from &quot;Task Scheduler Library&quot; with subfolders indicate in powershell script.</description>
+            <groups>
+                <group>
+                    <name>Template/ProMonitors</name>
+                </group>
+            </groups>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>5cfd46d0b9d1404986574b1c85bcd1ed</uuid>
+                    <name>Discovery Task Scheduler</name>
+                    <key>TaskSchedulerMonitoring[discovertasks]</key>
+                    <delay>2h</delay>
+                    <lifetime>0</lifetime>
+                    <description>Discover all Task at &quot;Task Scheduler Libraray&quot; with Subfolders indicate in powershell script.</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>710e6315f990440bafdab86315076a30</uuid>
+                            <name>Task: {#APPTASKS}: Last Result</name>
+                            <key>TaskSchedulerMonitoring[TaskLastResult,{#APPTASKS}]</key>
+                            <delay>2m</delay>
+                            <history>1w</history>
+                            <trends>90d</trends>
+                            <description>Last Result of Task, numeric value
+in most cases 0 = succesfull</description>
+                            <valuemap>
+                                <name>scheduledtask</name>
+                            </valuemap>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Tache planifiee</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>00369e0316c0424889fa34dc103975de</uuid>
+                                    <expression>last(/Template Windows Task Scheduler - ProMonitors/TaskSchedulerMonitoring[TaskLastResult,{#APPTASKS}])&lt;&gt;0 and last(/Template Windows Task Scheduler - ProMonitors/TaskSchedulerMonitoring[TaskLastResult,{#APPTASKS}])&lt;&gt;267009 and last(/Template Windows Task Scheduler - ProMonitors/TaskSchedulerMonitoring[TaskLastResult,{#APPTASKS}])&lt;&gt;1</expression>
+                                    <name>Ultimo Status de {#APPTASKS} Erro !</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>071ff1e2a0914c10bfbac4ff7337a263</uuid>
+                            <name>Task: {#APPTASKS}: Last Run Time</name>
+                            <key>TaskSchedulerMonitoring[TaskLastRunTime,{#APPTASKS}]</key>
+                            <delay>2m</delay>
+                            <history>1w</history>
+                            <trends>90d</trends>
+                            <units>unixtime</units>
+                            <description>Last Run Time of Task as an unixtimestamp</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Tache planifiee</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>f10ced65118546fa8575ea4718d210d8</uuid>
+                            <name>Task: {#APPTASKS}: Next Run Time</name>
+                            <key>TaskSchedulerMonitoring[TaskNextRunTime,{#APPTASKS}]</key>
+                            <delay>2m</delay>
+                            <history>1w</history>
+                            <trends>90d</trends>
+                            <units>unixtime</units>
+                            <description>Next Run Time of Task as an unixtimestamp</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Tache planifiee</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>87a9b68412b642a0bc5a035eff5b7d65</uuid>
+                            <name>Task: {#APPTASKS}: State</name>
+                            <key>TaskSchedulerMonitoring[TaskState,{#APPTASKS}]</key>
+                            <delay>10m</delay>
+                            <history>2w</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <description>State of Task (Fire trigger on Disabled)</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Tache planifiee</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>bb14164409304338a3fa5cf02c8f3b2f</uuid>
+                                    <expression>find(/Template Windows Task Scheduler - ProMonitors/TaskSchedulerMonitoring[TaskState,{#APPTASKS}],,&quot;regexp&quot;,&quot;Disabled&quot;)=1</expression>
+                                    <name>Tarefa &quot;{#APPTASKS}&quot; Desativada</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <valuemaps>
+                <valuemap>
+                    <uuid>ce6e3d6b359840ceb4c9b393c84f4b53</uuid>
+                    <name>scheduledtask</name>
+                    <mappings>
+                        <mapping>
+                            <value>0</value>
+                            <newvalue>Sucesso</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>1</value>
+                            <newvalue>Função incorreta ou desconhecida chamada</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2</value>
+                            <newvalue>Arquivo não encontrado</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>10</value>
+                            <newvalue>Ambiente incorreto</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>267008</value>
+                            <newvalue>A tarefa está pronta para ser executada no próximo horário agend</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>267009</value>
+                            <newvalue>A tarefa está em execução</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>267011</value>
+                            <newvalue>A tarefa ainda não está concluída</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>267012</value>
+                            <newvalue>Il n'y a plus d'opérations programmées pour cette tâche</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>267014</value>
+                            <newvalue>Não há mais operações agendadas para esta tarefa</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2147750671</value>
+                            <newvalue>Credenciais corrompidas</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2147750687</value>
+                            <newvalue>Uma instância desta tarefa já está em execução</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2147942401</value>
+                            <newvalue>Função incorreta ou desconhecida chamada</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2147942402</value>
+                            <newvalue>Um dos arquivos não está disponível</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2147942667</value>
+                            <newvalue>O diretório &quot;iniciar em&quot; não pode ser encontrado</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2147943645</value>
+                            <newvalue>O serviço não está disponível</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>3228369022</value>
+                            <newvalue>Exceção de software desconhecida</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+            </valuemaps>
+        </template>
+    </templates>
+</zabbix_export>
