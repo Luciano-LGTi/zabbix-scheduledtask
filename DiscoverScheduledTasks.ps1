@@ -87,3 +87,12 @@ $date = get-date -date "01/01/1970"
 $taskResult2 = (New-TimeSpan -Start $date -end $taskresult1).TotalSeconds
 Write-Output ($taskResult2)
 }}
+
+
+switch ($ITEM) {
+  "TaskState" {
+[string] $name1 = $ID
+$pathtask = Get-ScheduledTask -TaskPath "$path" -TaskName "$name1"
+$pathtask1 = $pathtask.State
+Write-Output ($pathtask1)
+}}

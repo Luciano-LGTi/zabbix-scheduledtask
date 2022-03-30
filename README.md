@@ -29,7 +29,7 @@ EnableRemoteCommands=1
 
 UnsafeUserParameters=1  
 
-UserParameter=TaskSchedulerMonitoring[*],powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Program Files\Zabbix Agent\DiscoverScheduledTasks.ps1" "$1" "$2"
+UserParameter=TaskSchedulerMonitoring[*],powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Program Files\Zabbix Agent 2\scripts\DiscoverScheduledTasks.ps1" "$1" "$2"
 
 Value mapping 'scheduledtask' is in french for error ID of tasks.
 
